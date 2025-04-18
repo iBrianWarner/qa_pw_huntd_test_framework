@@ -1,0 +1,32 @@
+{
+  "name": "qa_pw_huntd_test_framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pw:run:local-open": "npx playwright test --ui",
+    "pw:run:local-open-debug": "npx playwright test --ui --debug",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.14.1",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-playwright": "^2.2.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.3",
+    "typescript-eslint": "^8.30.1"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.7.0",
+    "allure-playwright": "^3.2.1"
+  },
+  "type": "module"
+}
