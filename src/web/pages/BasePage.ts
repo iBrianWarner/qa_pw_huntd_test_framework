@@ -1,9 +1,10 @@
-import { expect, test, Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { ApiWrapper } from '@pages/ApiWrapper';
 
-export abstract class BasePage {
+export abstract class BasePage extends ApiWrapper {
   abstract url: string;
 
-  readonly page: Page;
+  private readonly clock = this.page.clock;
 
   get pageName(): string {
     return this.constructor.name.replace('Page', '');
@@ -46,6 +47,52 @@ export abstract class BasePage {
 
       await this.page.waitForURL(urlToAssert, { waitUntil: 'commit' });
       await expect(this.page).toHaveURL(urlToAssert ?? this.url);
+    });
+  }
+
+  async waitForTimeout(timeout: number): Promise<void> {
+    await test.step(`Wait for ${timeout}ms`, async () => {
+      await this.page.waitForTimeout(timeout);
+    });
+  }
+
+  async pause(): Promise<void> {
+    await test.step(`Pause ${this.pageName} page`, async () => {
+      await this.page.pause();
+    });
+  }
+
+  async reload(shouldAssertOpened = true): Promise<void> {
+    await test.step(`Reload ${this.pageName} page`, async () => {
+      await this.page.reload();
+
+      if (shouldAssertOpened) {
+        await this.assertOpened();
+      }
+    });
+  }
+
+  async setFixedTime(time: number | string | Date): Promise<void> {
+    await test.step('Set fixed page time', async () => {
+      await this.page.clock.setFixedTime(time);
+    });
+  }
+
+  async setSystemTime(time: number | string | Date): Promise<void> {
+    await test.step('Set system time', async () => {
+      await this.page.clock.setSystemTime(time);
+    });
+  }
+
+  async installFakeTimeControlFunctions(): Promise<void> {
+    await test.step('Install fake time control functions', async () => {
+      await this.clock.install();
+    });
+  }
+
+  async fastForwardTime(ticks: number): Promise<void> {
+    await test.step('Fast forward time', async () => {
+      await this.page.clock.fastForward(ticks);
     });
   }
 }
