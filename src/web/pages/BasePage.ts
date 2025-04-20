@@ -15,13 +15,9 @@ export abstract class BasePage {
   ): string {
     let newUrl = `${url}?`;
 
-    newUrl += Object.keys(parameters).map(
-      (key) => `${key}=${parameters[key]}&`,
-    );
+    newUrl += Object.keys(parameters).map(key => `${key}=${parameters[key]}&`);
 
-    return newUrl
-      .slice(0, -1)
-      .replace(',', '');
+    return newUrl.slice(0, -1).replace(',', '');
   }
 
   async goto(url?: string): Promise<void> {

@@ -1,20 +1,11 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'eslint/config';
-import globals from 'globals';
 import js from '@eslint/js';
-import pluginJs from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 import playwright from 'eslint-plugin-playwright';
-import eslintPluginPrettier from 'eslint-plugin-prettier';
+import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import plugin from '@typescript-eslint/eslint-plugin';
-import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
-
-const { configs: tsConfigs } = plugin;
-const currentFilePath = fileURLToPath(import.meta.url);
-const currentDirPath = path.dirname(currentFilePath);
-const projectTsConfig = path.resolve(currentDirPath, 'tsconfig.json');
+import eslintPluginPrettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
   {
@@ -22,20 +13,8 @@ export default defineConfig([
     plugins: {
       js,
       prettier: eslintPluginPrettier,
-      '@typescript-eslint': tsEslintPlugin,
-      import: importPlugin,
     },
-    extends: [
-      'js/recommended',
-      'airbnb-base',
-      'plugin:@typescript-eslint/recommended',
-      eslintConfigPrettier,
-    ],
-    parserOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      project: projectTsConfig,
-    },
+    extends: ['js/recommended', eslintConfigPrettier],
     rules: {
       'prettier/prettier': 'error',
     },
@@ -50,17 +29,41 @@ export default defineConfig([
     extends: [eslintConfigPrettier],
     rules: {
       ...pluginJs.configs.recommended.rules,
-      ...playwright.configs['flat/recommended'].rules,
       'no-unused-vars': 'error',
-      'max-len': ['error', { code: 80, comments: 80 }],
+      'max-len': [
+        'error',
+        {
+          code: 80,
+          comments: 80,
+        },
+      ],
+      ...playwright.configs['flat/recommended'].rules,
       'playwright/expect-expect': 'off',
       'playwright/no-skipped-test': 'warn',
+
+      semi: ['error', 'always'],
+
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-member-accessibility': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': ['error'],
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-useless-constructor': 'error',
+      '@typescript-eslint/explicit-module-boundary-types': 'error',
+      '@typescript-eslint/naming-convention': [
+        'error',
+        { selector: 'default', format: ['camelCase', 'UPPER_CASE'] },
+        { selector: 'typeLike', format: ['PascalCase'] },
+        { selector: 'enumMember', format: ['PascalCase', 'camelCase'] },
+      ],
     },
     ignores: [
       '**/node_modules/*',
       'playwright.config.ts',
       '**/playwright-report/**',
+      'eslint.config.mjs',
     ],
   },
-  tsConfigs.recommended,
+  tseslint.configs.recommended,
 ]);
