@@ -17,6 +17,7 @@ export default defineConfig([
     extends: ['js/recommended', eslintConfigPrettier],
     rules: {
       'prettier/prettier': 'error',
+      'eol-last': ['error', 'always'],
     },
   },
   {
