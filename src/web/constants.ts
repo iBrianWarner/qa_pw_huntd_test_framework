@@ -4,6 +4,7 @@ export const ROUTES = {
   home: '/',
   profile: {
     candidate: '/profile/candidate',
+    candidateJobExpectations: '/profile/candidate/job-expectations',
     recruiter: '/profile/recruiter',
   },
 };

@@ -13,9 +13,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci --legacy-peer-deps
-      - name: Install Playwright Browsers
+      - name: 🧪 Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         run: npx playwright test

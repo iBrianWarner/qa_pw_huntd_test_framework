@@ -25,3 +25,16 @@ export function generatePassword(
 
   return password;
 }
+
+export function generateNumber(options: {
+  min?: number;
+  max?: number;
+} = {}): number {
+  const { min = 0, max = 100 } = options;
+  const number = faker.number.int({
+    min,
+    max,
+  })
+
+  return number;
+}
