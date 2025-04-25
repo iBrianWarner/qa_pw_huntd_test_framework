@@ -2,34 +2,34 @@ import { ROUTES } from '@/web/constants';
 import { test, expect } from '@playwright/test';
 import { LoggedInBasePage } from '@pages/LoggedInBasePage';
 import { DropdownField } from '@/web/components/Fields/DropdownField';
-import { Cities, EnglishLevel } from '@/common/typedefs/candidateInfo.typedefs';
-import { CommonInputs } from '@/web/components/Fields/CommonInputs';
+import { EnglishLevel } from '@/common/typedefs/englishLevel.typedefs';
+import { Cities } from '@/common/typedefs/cities.typedefs';
+import { JobExperience } from '@/common/typedefs/jobExperience.typedefs';
+import { UiElementsHelper } from '@/web/components/Helpers/UiElementsHelpers';
+import { FormControlsComponent } from '@/web/components/Helpers/FormControlsComponents';
 
 export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
-  url = ROUTES.profile.candidateJobExpectations;
+  public readonly url = ROUTES.profile.candidateJobExpectations;
 
   public readonly dropdownField = new DropdownField(this.page);
 
-  public readonly commonInputs = new CommonInputs(this.page);
+  private readonly elementsHelper = new UiElementsHelper(this.page);
 
-  private readonly annualButton = this.page.getByRole('button', {
-    name: 'Annual',
-  });
+  private readonly formControlsComponent = new FormControlsComponent(this.page);
 
-  private readonly monthlyButton = this.page.getByRole('button', {
-    name: 'Monthly',
-  });
+  private readonly annualButton = this.elementsHelper.getButtonByName('Annual');
+
+  private readonly monthlyButton =
+    this.elementsHelper.getButtonByName('Monthly');
 
   private readonly desiredSalaryFiled =
-    this.commonInputs.getFieldById('salary');
+    this.elementsHelper.getFieldById('salary');
 
-  private readonly jobExperienceField = this.page
-    .locator('.select__control')
-    .filter({ hasText: 'Job experience' });
+  private readonly jobExperienceField =
+    this.elementsHelper.getDropdownFieldByName('Job experience');
 
-  private readonly englishField = this.page
-    .locator('.select__control')
-    .filter({ hasText: 'English level' });
+  private readonly englishField =
+    this.elementsHelper.getDropdownFieldByName('English level');
 
   private readonly jobExperiencePlusButton =
     this.dropdownField.getPlusIconForField(this.jobExperienceField);
@@ -41,14 +41,10 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
     this.englishField,
   );
 
-  private readonly cityField = this.commonInputs.getFieldById('location');
+  private readonly cityField = this.elementsHelper.getFieldById('location');
 
   private readonly isRemoteCheckbox = this.page.getByRole('checkbox', {
     name: 'Remote',
-  });
-
-  private readonly saveAndContinueButton = this.page.getByRole('button', {
-    name: 'Save and continue',
   });
 
   async fillDesiredSalaryField(value: number): Promise<void> {
@@ -75,7 +71,7 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
     });
   }
 
-  async selectJobExperience(experience: string): Promise<void> {
+  async selectJobExperience(experience: JobExperience): Promise<void> {
     await test.step('Select technology', async () => {
       await this.dropdownField.selectOption(experience);
     });
@@ -113,8 +109,6 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
   }
 
   async clickSaveAndContinueButton(): Promise<void> {
-    await test.step('Click save and continue button', async () => {
-      await this.saveAndContinueButton.click();
-    });
+    await this.formControlsComponent.clickSaveAndContinueButton();
   }
 }

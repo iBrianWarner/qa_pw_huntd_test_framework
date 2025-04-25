@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { BasePage } from '@pages/BasePage';
 
 export class SignUpPage extends BasePage {
-  url = ROUTES.signUp;
+  public readonly url = ROUTES.signUp;
 
   private readonly emailField = this.page.locator('input[name="email"]');
 

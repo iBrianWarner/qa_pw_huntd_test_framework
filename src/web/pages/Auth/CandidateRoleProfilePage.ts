@@ -2,17 +2,20 @@ import { ROUTES } from '@/web/constants';
 import { test, expect, Locator } from '@playwright/test';
 import { LoggedInBasePage } from '@pages/LoggedInBasePage';
 import { DropdownField } from '@/web/components/Fields/DropdownField';
-import { CommonInputs } from '@/web/components/Fields/CommonInputs';
+import { UiElementsHelper } from '@/web/components/Helpers/UiElementsHelpers';
+import { FormControlsComponent } from '@/web/components/Helpers/FormControlsComponents';
 
 export class CandidateRoleProfilePage extends LoggedInBasePage {
-  url = ROUTES.profile.candidate;
+  public readonly url = ROUTES.profile.candidate;
 
   public readonly dropdownField = new DropdownField(this.page);
 
-  public readonly commonInputs = new CommonInputs(this.page);
+  private readonly elementsHelper = new UiElementsHelper(this.page);
+
+  private readonly formControlsComponent = new FormControlsComponent(this.page);
 
   private readonly desiredPositionField =
-    this.commonInputs.getFieldById('position');
+    this.elementsHelper.getFieldById('position');
 
   private readonly desiredRolePlusButton =
     this.dropdownField.getPlusIconForField(this.page);
@@ -25,11 +28,7 @@ export class CandidateRoleProfilePage extends LoggedInBasePage {
   );
 
   private readonly technologiesField =
-    this.commonInputs.getFieldById('technologies');
-
-  private readonly saveAndContinueButton = this.page.getByRole('button', {
-    name: 'Save and continue',
-  });
+    this.elementsHelper.getFieldById('technologies');
 
   private getRoleLocator(role: string): Locator {
     return this.page.locator('.select__option').filter({
@@ -103,9 +102,20 @@ export class CandidateRoleProfilePage extends LoggedInBasePage {
     });
   }
 
-  async clickSaveAndContinueButton(): Promise<void> {
-    await test.step('Click "Save and continue" button', async () => {
-      await this.saveAndContinueButton.click();
+  async addTechnologies(options: {
+    inputValue: string;
+    technologies: string[];
+  }): Promise<void> {
+    await test.step('Add multiple technologies', async () => {
+      const { inputValue, technologies } = options;
+
+      for (const technology of technologies) {
+        await this.addTechnology({ inputValue, technologyName: technology });
+      }
     });
+  }
+
+  async clickSaveAndContinueButton(): Promise<void> {
+    await this.formControlsComponent.clickSaveAndContinueButton();
   }
 }

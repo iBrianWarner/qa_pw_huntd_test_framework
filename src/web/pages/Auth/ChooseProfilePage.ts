@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { BasePage } from '@pages/BasePage';
 
 export class ChooseProfilePage extends BasePage {
-  url = ROUTES.chooseProfile;
+  public readonly url = ROUTES.chooseProfile;
 
   private readonly candidateOptionTile = this.page.getByText('Candidate');
 

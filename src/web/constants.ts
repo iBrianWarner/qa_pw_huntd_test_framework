@@ -6,5 +6,6 @@ export const ROUTES = {
     candidate: '/profile/candidate',
     candidateJobExpectations: '/profile/candidate/job-expectations',
     recruiter: '/profile/recruiter',
+    experience: '/profile/candidate/experience',
   },
 };

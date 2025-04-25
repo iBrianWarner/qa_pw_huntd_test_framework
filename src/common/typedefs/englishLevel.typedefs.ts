@@ -5,9 +5,3 @@ export enum EnglishLevel {
   UpperIntermediate = 'Upper intermediate',
   Advanced = 'Advanced',
 }
-
-export enum Cities {
-  Kyiv = 'Kyiv',
-  Lviv = 'Lviv',
-  Luhansk = 'Luhansk',
-}

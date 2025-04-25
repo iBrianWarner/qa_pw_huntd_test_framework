@@ -13,7 +13,9 @@ import {
   TECHNOLOGIES,
 } from '@/common/constants/candidateInfo.constants';
 import { CandidateJobExpectationsProfilePage } from '@/web/pages/Auth/CandidateJobExpectationsPage';
-import { Cities, EnglishLevel } from '@/common/typedefs/candidateInfo.typedefs';
+import { EnglishLevel } from '@/common/typedefs/englishLevel.typedefs';
+import { Cities } from '@/common/typedefs/cities.typedefs';
+import { JobExperience } from '@/common/typedefs/jobExperience.typedefs';
 
 test.describe('Sign Up page', () => {
   let signUpPage: SignUpPage;
@@ -58,34 +60,19 @@ test.describe('Sign Up page', () => {
     await candidateProfilePage.clickDesiredRoleMinusButton();
 
     await candidateProfilePage.clickTechnologiesFieldLabel();
-    await candidateProfilePage.addTechnology({
+    await candidateProfilePage.addTechnologies({
       inputValue: js,
-      technologyName: react,
+      technologies: [react, node, express, angular, vue],
     });
-    await candidateProfilePage.addTechnology({
-      inputValue: js,
-      technologyName: node,
-    });
-    await candidateProfilePage.addTechnology({
-      inputValue: js,
-      technologyName: express,
-    });
-    await candidateProfilePage.addTechnology({
-      inputValue: js,
-      technologyName: angular,
-    });
-    await candidateProfilePage.addTechnology({
-      inputValue: js,
-      technologyName: vue,
-    });
-
     await candidateProfilePage.clickSaveAndContinueButton();
 
     await candidateJobExpectationsPage.assertOpened();
     await candidateJobExpectationsPage.assertAnnualButtonIsActive();
     await candidateJobExpectationsPage.fillDesiredSalaryField(salary);
     await candidateJobExpectationsPage.clickJobExperiencePlusButton();
-    await candidateJobExpectationsPage.selectJobExperience('1-3 years');
+    await candidateJobExpectationsPage.selectJobExperience(
+      JobExperience.UpTo3Years,
+    );
     await candidateJobExpectationsPage.clickEnglishPlusButton();
     await candidateJobExpectationsPage.selectEnglishLevel(
       EnglishLevel.UpperIntermediate,

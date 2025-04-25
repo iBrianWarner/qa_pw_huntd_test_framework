@@ -1,6 +1,6 @@
-import { Cities } from '@/common/typedefs/candidateInfo.typedefs';
-import { BaseComponent } from '@/web/components/BaseComponent';
 import { test, Locator, Page } from '@playwright/test';
+import { Cities } from '@/common/typedefs/cities.typedefs';
+import { BaseComponent } from '@/web/components/BaseComponent';
 
 export class DropdownField extends BaseComponent {
   private readonly selectDropdownOption = this.page.locator('.select__option');
