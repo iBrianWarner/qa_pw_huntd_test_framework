@@ -11,7 +11,7 @@ export class ChooseProfilePage extends BasePage {
 
   async clickCandidateOptionTile(): Promise<void> {
     await test.step('Click candidate option tile', async () => {
-      await this.candidateOptionTile.click();
+      await this.candidateOptionTile.first().click();
     });
   }
 

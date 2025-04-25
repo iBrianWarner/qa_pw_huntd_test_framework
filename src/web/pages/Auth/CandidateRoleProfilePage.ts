@@ -1,35 +1,37 @@
 import { ROUTES } from '@/web/constants';
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 import { LoggedInBasePage } from '@pages/LoggedInBasePage';
 import { DropdownField } from '@/web/components/Fields/DropdownField';
+import { CommonInputs } from '@/web/components/Fields/CommonInputs';
 
 export class CandidateRoleProfilePage extends LoggedInBasePage {
   url = ROUTES.profile.candidate;
 
   public readonly dropdownField = new DropdownField(this.page);
 
-  private readonly desiredPositionField = this.page.locator(
-    'input[name="position"]',
+  public readonly commonInputs = new CommonInputs(this.page);
+
+  private readonly desiredPositionField =
+    this.commonInputs.getFieldById('position');
+
+  private readonly desiredRolePlusButton =
+    this.dropdownField.getPlusIconForField(this.page);
+
+  private readonly desiredRoleMinusButton =
+    this.dropdownField.getMinusIconForField(this.page);
+
+  private readonly technologiesFieldLabel = this.page.getByText(
+    'Type and select strongest tech skills',
   );
 
-  private readonly desiredRolePlusButton = this.dropdownField
-    .getPlusIconForField(this.page);
-
-  private readonly desiredRoleMinusButton = this.dropdownField
-    .getMinusIconForField(this.page);
-
-  private readonly technologiesFieldLabel = this.page
-    .getByText('Type and select strongest tech skills');
-
-  private readonly technologiesField = this.page.locator(
-    'input#technologies',
-  );
+  private readonly technologiesField =
+    this.commonInputs.getFieldById('technologies');
 
   private readonly saveAndContinueButton = this.page.getByRole('button', {
     name: 'Save and continue',
   });
 
-  private getRoleLocator(role: string) {
+  private getRoleLocator(role: string): Locator {
     return this.page.locator('.select__option').filter({
       hasText: role,
     });

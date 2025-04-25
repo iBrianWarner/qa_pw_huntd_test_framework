@@ -6,17 +6,14 @@ import {
 import { SignUpPage } from '@/web/pages/Auth/SignUpPage';
 import { ChooseProfilePage } from '@/web/pages/Auth/ChooseProfilePage';
 import { test } from '@playwright/test';
-import {
-  CandidateRoleProfilePage,
-} from '@/web/pages/Auth/CandidateRoleProfilePage';
+import { CandidateRoleProfilePage } from '@/web/pages/Auth/CandidateRoleProfilePage';
 import {
   DESIRED_POSITION,
   MIN_ANNUAL_SALARY_USD,
   TECHNOLOGIES,
 } from '@/common/constants/candidateInfo.constants';
-import {
-  CandidateJobExpectationsProfilePage,
-} from '@/web/pages/Auth/CandidateJobExpectationsPage';
+import { CandidateJobExpectationsProfilePage } from '@/web/pages/Auth/CandidateJobExpectationsPage';
+import { Cities, EnglishLevel } from '@/common/typedefs/candidateInfo.typedefs';
 
 test.describe('Sign Up page', () => {
   let signUpPage: SignUpPage;
@@ -30,21 +27,15 @@ test.describe('Sign Up page', () => {
     min: MIN_ANNUAL_SALARY_USD,
     max: MIN_ANNUAL_SALARY_USD * 2,
   });
-  const {
-    js,
-    react,
-    node,
-    express,
-    angular,
-    vue,
-  } = TECHNOLOGIES;
+  const { js, react, node, express, angular, vue } = TECHNOLOGIES;
 
   test.beforeEach(async ({ page }) => {
     signUpPage = new SignUpPage(page);
     chooseProfilePage = new ChooseProfilePage(page);
     candidateProfilePage = new CandidateRoleProfilePage(page);
-    candidateJobExpectationsPage
-      = new CandidateJobExpectationsProfilePage(page);
+    candidateJobExpectationsPage = new CandidateJobExpectationsProfilePage(
+      page,
+    );
   });
 
   test('should provide ability to sign up and create a candidate profile', async ({}) => {
@@ -70,7 +61,7 @@ test.describe('Sign Up page', () => {
     await candidateProfilePage.addTechnology({
       inputValue: js,
       technologyName: react,
-    })
+    });
     await candidateProfilePage.addTechnology({
       inputValue: js,
       technologyName: node,
@@ -95,5 +86,12 @@ test.describe('Sign Up page', () => {
     await candidateJobExpectationsPage.fillDesiredSalaryField(salary);
     await candidateJobExpectationsPage.clickJobExperiencePlusButton();
     await candidateJobExpectationsPage.selectJobExperience('1-3 years');
+    await candidateJobExpectationsPage.clickEnglishPlusButton();
+    await candidateJobExpectationsPage.selectEnglishLevel(
+      EnglishLevel.UpperIntermediate,
+    );
+    await candidateJobExpectationsPage.selectCity(Cities.Kyiv);
+    await candidateJobExpectationsPage.assertIsRemoteCheckboxIsChecked();
+    await candidateJobExpectationsPage.clickSaveAndContinueButton();
   });
 });

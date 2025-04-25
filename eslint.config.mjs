@@ -36,11 +36,15 @@ export default defineConfig([
         {
           code: 80,
           comments: 80,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
+          ignoreComments: true,
         },
       ],
       ...playwright.configs['flat/recommended'].rules,
       'playwright/expect-expect': 'off',
-      'playwright/no-skipped-test': 'warn',
+      'playwright/no-skipped-test': 'error',
 
       semi: ['error', 'always'],
 
@@ -58,6 +62,20 @@ export default defineConfig([
         { selector: 'typeLike', format: ['PascalCase'] },
         { selector: 'enumMember', format: ['PascalCase', 'camelCase'] },
       ],
+
+      // 'import/order': [
+      //   'error',
+      //   {
+      //     groups: [
+      //       'builtin',
+      //       'external',
+      //       'internal',
+      //       ['parent', 'sibling'],
+      //       'index',
+      //     ],
+      //     'newlines-between': 'ignore',
+      //   },
+      // ],
     },
     ignores: [
       '**/node_modules/*',
