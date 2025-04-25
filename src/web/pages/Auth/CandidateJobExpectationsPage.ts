@@ -7,6 +7,7 @@ import { Cities } from '@/common/typedefs/cities.typedefs';
 import { JobExperience } from '@/common/typedefs/jobExperience.typedefs';
 import { UiElementsHelper } from '@/web/components/Helpers/UiElementsHelpers';
 import { FormControlsComponent } from '@/web/components/Helpers/FormControlsComponents';
+import { IS_ACTIVE_REGEXP } from '@/common/constants/regExp.constants';
 
 export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
   public readonly url = ROUTES.profile.candidateJobExpectations;
@@ -55,7 +56,7 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
 
   async assertAnnualButtonIsActive(): Promise<void> {
     await test.step('Assert annual button is active', async () => {
-      await expect(this.annualButton).toHaveClass(/is-active/);
+      await expect(this.annualButton).toHaveClass(IS_ACTIVE_REGEXP);
     });
   }
 
@@ -77,6 +78,15 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
     });
   }
 
+  async selectJobExperienceFromDropdown(
+    experience: JobExperience,
+  ): Promise<void> {
+    await test.step('Select job experience from dropdown', async () => {
+      await this.clickJobExperiencePlusButton();
+      await this.selectJobExperience(experience);
+    });
+  }
+
   async clickEnglishPlusButton(): Promise<void> {
     await test.step('Click English plus button', async () => {
       await this.englishPlusButton.click();
@@ -86,6 +96,15 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
   async selectEnglishLevel(englishLevel: EnglishLevel): Promise<void> {
     await test.step('Select English level', async () => {
       await this.dropdownField.selectOption(englishLevel);
+    });
+  }
+
+  async selectEnglishLevelFromDropdown(
+    englishLevel: EnglishLevel,
+  ): Promise<void> {
+    await test.step('Select English level from dropdown', async () => {
+      await this.clickEnglishPlusButton();
+      await this.selectEnglishLevel(englishLevel);
     });
   }
 

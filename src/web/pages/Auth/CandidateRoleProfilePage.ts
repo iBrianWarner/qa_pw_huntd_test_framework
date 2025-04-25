@@ -31,7 +31,7 @@ export class CandidateRoleProfilePage extends LoggedInBasePage {
     this.elementsHelper.getFieldById('technologies');
 
   private getRoleLocator(role: string): Locator {
-    return this.page.locator('.select__option').filter({
+    return this.dropdownField.selectDropdownOption.filter({
       hasText: role,
     });
   }
@@ -60,6 +60,15 @@ export class CandidateRoleProfilePage extends LoggedInBasePage {
     });
   }
 
+  async selectDesiredRoleFromDropdown(role: string): Promise<void> {
+    await test.step('Select desired role from dropdown', async () => {
+      await this.clickDesiredRolePlusButton();
+      await this.waitForRoleIsVisible(role);
+      await this.selectDesiredRole(role);
+      await this.clickDesiredRoleMinusButton();
+    });
+  }
+
   async waitForRoleIsVisible(role: string): Promise<void> {
     await test.step('Wait for role is visible', async () => {
       await this.getRoleLocator(role).waitFor();
@@ -68,7 +77,7 @@ export class CandidateRoleProfilePage extends LoggedInBasePage {
 
   async selectDesiredRole(role: string): Promise<void> {
     await test.step('Select desired role', async () => {
-      await this.getRoleLocator(role).click();
+      await this.dropdownField.selectOption(role);
     });
   }
 

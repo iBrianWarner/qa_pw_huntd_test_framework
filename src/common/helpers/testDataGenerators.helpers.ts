@@ -16,14 +16,12 @@ export function generatePassword(
 ): string {
   const { length, memorable, pattern, prefix } = options;
 
-  const password = faker.internet.password({
+  return faker.internet.password({
     length,
     memorable,
     pattern,
     prefix,
   });
-
-  return password;
 }
 
 export function generateNumber(
@@ -33,10 +31,29 @@ export function generateNumber(
   } = {},
 ): number {
   const { min = 0, max = 100 } = options;
-  const number = faker.number.int({
+
+  return faker.number.int({
     min,
     max,
   });
+}
 
-  return number;
+export function generateStringByLength(
+  options: {
+    length?: number;
+  } = {},
+): string {
+  const { length } = options;
+
+  return faker.string.alpha({
+    length,
+  });
+}
+
+export function generatePhrase(wordCount = 3): string {
+  return faker.lorem.sentence(wordCount);
+}
+
+export function generateParagraph(sentenceCount = 3): string {
+  return faker.lorem.paragraph(sentenceCount);
 }

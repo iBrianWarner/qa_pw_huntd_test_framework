@@ -1,9 +1,12 @@
 import { test, Locator, Page } from '@playwright/test';
 import { Cities } from '@/common/typedefs/cities.typedefs';
 import { BaseComponent } from '@/web/components/BaseComponent';
+import { UiElementsHelper } from '../Helpers/UiElementsHelpers';
 
 export class DropdownField extends BaseComponent {
-  private readonly selectDropdownOption = this.page.locator('.select__option');
+  private readonly elementsHelper = new UiElementsHelper(this.page);
+
+  public readonly selectDropdownOption = this.page.locator('.select__option');
 
   private getLocationOption(option: string): Locator {
     return this.page.locator('.pac-item').filter({
@@ -20,7 +23,7 @@ export class DropdownField extends BaseComponent {
   }
 
   async selectOption(option: string): Promise<void> {
-    await test.step('Click on option with the required option', async () => {
+    await test.step(`Click on the required option ${option}`, async () => {
       await this.selectDropdownOption.filter({ hasText: option }).click();
     });
   }

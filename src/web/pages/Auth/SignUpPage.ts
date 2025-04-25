@@ -1,21 +1,22 @@
 import { ROUTES } from '@/web/constants';
 import { test, expect } from '@playwright/test';
 import { BasePage } from '@pages/BasePage';
+import { UiElementsHelper } from '@/web/components/Helpers/UiElementsHelpers';
 
 export class SignUpPage extends BasePage {
   public readonly url = ROUTES.signUp;
 
-  private readonly emailField = this.page.locator('input[name="email"]');
+  public readonly elementsHelper = new UiElementsHelper(this.page);
 
-  private readonly passwordField = this.page.locator('input[name="password"]');
+  private readonly emailField = this.elementsHelper.getFieldById('email');
 
-  private readonly repeatPasswordField = this.page.locator(
-    'input[name="repeatPassword"]',
-  );
+  private readonly passwordField = this.elementsHelper.getFieldById('password');
 
-  private readonly createAccountButton = this.page.locator(
-    'button[type="submit"]',
-  );
+  private readonly repeatPasswordField =
+    this.elementsHelper.getFieldById('repeatPassword');
+
+  private readonly createAccountButton =
+    this.elementsHelper.getButtonByName('Create account');
 
   async fillEmail(email: string): Promise<void> {
     await test.step('Fill email field', async () => {

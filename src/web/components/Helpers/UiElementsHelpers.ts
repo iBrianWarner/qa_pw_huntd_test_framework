@@ -1,4 +1,4 @@
-import { Page, Locator } from 'playwright';
+import { Page, Locator } from '@playwright/test';
 
 export class UiElementsHelper {
   constructor(private page: Page) {}
@@ -13,5 +13,9 @@ export class UiElementsHelper {
 
   public getDropdownFieldByName(name: string): Locator {
     return this.page.locator('.select__control').filter({ hasText: name });
+  }
+
+  public getTextareaById(id: string): Locator {
+    return this.page.locator(`textarea#${id}`);
   }
 }
