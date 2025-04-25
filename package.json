@@ -6,6 +6,9 @@
   "scripts": {
     "pw:run:local-open": "npx playwright test --ui",
     "pw:run:local-open-debug": "npx playwright test --ui --debug",
+    "lint": "eslint . --ext .ts,.js",
+    "allure:generate": "allure generate --clean",
+    "allure:open": "allure open",
     "prepare": "husky"
   },
   "keywords": [],

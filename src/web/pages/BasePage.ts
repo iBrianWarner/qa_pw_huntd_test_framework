@@ -1,3 +1,6 @@
+/* eslint-disable playwright/no-page-pause */
+/* eslint-disable playwright/no-wait-for-timeout */
+/* eslint-disable playwright/no-conditional-in-test */
 import { expect, test } from '@playwright/test';
 import { ApiWrapper } from '@pages/ApiWrapper';
 
