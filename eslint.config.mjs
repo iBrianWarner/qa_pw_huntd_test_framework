@@ -16,7 +16,8 @@ export default defineConfig([
     },
     extends: ['js/recommended', eslintConfigPrettier],
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'warn',
+      'newline-per-chained-call': 'off',
       'eol-last': ['error', 'always'],
     },
   },
