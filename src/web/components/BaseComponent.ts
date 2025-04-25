@@ -1,7 +1,6 @@
 import test from '@playwright/test';
 import { ApiWrapper } from '@pages/ApiWrapper';
 
-
 export class BaseComponent extends ApiWrapper {
   async closeWithEscape(): Promise<void> {
     await test.step('Close element with escape', async () => {

@@ -1,6 +1,5 @@
 import {
   generateEmail,
-  generateNumber,
   generatePassword,
 } from '@/common/helpers/testDataGenerators.helpers';
 import { SignUpPage } from '@/web/pages/Auth/SignUpPage';
@@ -9,13 +8,13 @@ import { test } from '@playwright/test';
 import { CandidateRoleProfilePage } from '@/web/pages/Auth/CandidateRoleProfilePage';
 import {
   DESIRED_POSITION,
-  MIN_ANNUAL_SALARY_USD,
   TECHNOLOGIES,
 } from '@/common/constants/candidateInfo.constants';
 import { CandidateJobExpectationsProfilePage } from '@/web/pages/Auth/CandidateJobExpectationsPage';
 import { EnglishLevel } from '@/common/typedefs/englishLevel.typedefs';
 import { Cities } from '@/common/typedefs/cities.typedefs';
 import { JobExperience } from '@/common/typedefs/jobExperience.typedefs';
+import { generateSalaryRange } from '@/common/helpers/generateSalary.helpers';
 
 test.describe('Sign Up page', () => {
   let signUpPage: SignUpPage;
@@ -25,10 +24,7 @@ test.describe('Sign Up page', () => {
 
   const email = generateEmail();
   const password = generatePassword();
-  const salary = generateNumber({
-    min: MIN_ANNUAL_SALARY_USD,
-    max: MIN_ANNUAL_SALARY_USD * 2,
-  });
+  const salary = generateSalaryRange();
   const { js, react, node, express, angular, vue } = TECHNOLOGIES;
 
   test.beforeEach(async ({ page }) => {
