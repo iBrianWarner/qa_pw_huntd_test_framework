@@ -58,7 +58,6 @@ jobs:
           publish_dir: allure-report
           publish_branch: gh-pages
           keep_files: true
-          destination_dir: ${{ github.run_number }}
 
       - name: ❌ Fail job if tests failed
         if: ${{ steps.playwright.conclusion == 'failure' }}
