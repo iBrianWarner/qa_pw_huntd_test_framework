@@ -1,2 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","16531","should provide ability to sign up and create a candidate profile","chromium","Sat Apr 26 14:46:23 UTC 2025","passed","Sat Apr 26 14:46:40 UTC 2025","Sign Up page","playwright/e2e/IAM/signUpCandidate.spec.ts","",""
+"","61172","should provide ability to sign up and create a candidate profile","android","Sat Apr 26 15:53:27 UTC 2025","broken","Sat Apr 26 15:54:28 UTC 2025","Sign Up page","playwright/e2e_mobile/IAM/signUpCandidate.android.mobile.spec.ts","",""
+"","17337","should provide ability to sign up and create a candidate profile","chromium","Sat Apr 26 15:51:49 UTC 2025","passed","Sat Apr 26 15:52:06 UTC 2025","Sign Up page","playwright/e2e/IAM/signUpCandidate.spec.ts","",""
+"","15559","should provide ability to sign up and create a candidate profile","chromium","Sat Apr 26 15:52:06 UTC 2025","failed","Sat Apr 26 15:52:22 UTC 2025","Sign Up page","playwright/e2e_mobile/IAM/signUpCandidate.android.mobile.spec.ts","",""
