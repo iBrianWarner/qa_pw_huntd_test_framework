@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","14088","should provide ability to sign up and create a candidate profile","chromium","Sat Apr 26 10:38:45 UTC 2025","failed","Sat Apr 26 10:39:00 UTC 2025","Sign Up page","playwright/e2e/IAM/signUpCandidate.spec.ts","",""
+"","13599","should provide ability to sign up and create a candidate profile","chromium","Sat Apr 26 10:42:56 UTC 2025","failed","Sat Apr 26 10:43:10 UTC 2025","Sign Up page","playwright/e2e/IAM/signUpCandidate.spec.ts","",""
