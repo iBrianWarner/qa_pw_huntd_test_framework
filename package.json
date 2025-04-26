@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pw:run:local-open": "npx playwright test --ui",
-    "pw:run:local-open-debug": "npx playwright test --ui --debug",
+    "pw:run:ci": "ENV_TYPE=ci npx playwright test --project=chromium --project=ios --project=android",
+    "pw:run:local": "ENV_TYPE=local npx playwright test --project=chromium  --project=ios --project=android",
+    "pw:run:local-open": "ENV_TYPE=local npx playwright test --ui",
+    "pw:run:local-open-debug": "PWDEBUG=console ENV_TYPE=local npx playwright test --ui --debug",
     "lint": "eslint . --ext .ts,.js",
     "allure:generate": "allure generate --clean",
     "allure:open": "allure open",
@@ -38,6 +40,7 @@
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
     "allure-playwright": "^3.2.1",
+    "dotenv": "^16.5.0",
     "module-alias": "^2.2.3",
     "npm": "^11.3.0"
   },

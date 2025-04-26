@@ -37,11 +37,11 @@ jobs:
       - name: ▶️ Run Playwright tests
         id: playwright
         continue-on-error: true
-        run: npx playwright test
+        run: npm run pw:run:ci
         
       - name: 🧪 Generate Allure Report
         if: ${{ always() }}
-        run: allure generate --clean
+        run: npm run allure:generate
 
       - name: ⬆️ Upload artifacts
         if: ${{ always() }}

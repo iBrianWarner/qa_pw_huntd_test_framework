@@ -1,34 +1,49 @@
 import { PwProjectName } from '@/common/allure/allure.typedefs';
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import fs from 'fs';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const envFilesPath = './environment';
+
+const envType = process.env.ENV_TYPE || '';
+const isCi = envType === 'ci';
+
+if (fs.existsSync(`${envFilesPath}/.env.${process.env.ENV_TYPE}`)) {
+  dotenv.config({
+    path: `${envFilesPath}/.env.${process.env.ENV_TYPE}`,
+  });
+} else {
+  throw new Error(`
+Missing config file ${envFilesPath}/.env.${process.env.ENV_TYPE}, create from sample if available.
+`);
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout: 60000,
+  timeout: isCi ? 60000 : 30000,
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: isCi ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: isCi ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['list'], ['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://huntd.tech/',
+    baseURL: process.env.BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
