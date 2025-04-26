@@ -54,6 +54,12 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
     });
   }
 
+  async typeDesiredSalaryField(value: number): Promise<void> {
+    await test.step('Type desired salary field', async () => {
+      await this.desiredSalaryFiled.pressSequentially(String(value));
+    });
+  }
+
   async assertAnnualButtonIsActive(): Promise<void> {
     await test.step('Assert annual button is active', async () => {
       await expect(this.annualButton).toHaveClass(IS_ACTIVE_REGEXP);
@@ -118,6 +124,14 @@ export class CandidateJobExpectationsProfilePage extends LoggedInBasePage {
     await test.step('Select city', async () => {
       await this.fillCityField(value);
       await this.dropdownField.selectLocationOption(value);
+    });
+  }
+
+  async waitForCityFieldHasValue(city: Cities): Promise<void> {
+    await test.step('Wait for city field has value', async () => {
+      const cityField = this.elementsHelper.getDropdownFieldByName(city);
+
+      await cityField.waitFor();
     });
   }
 

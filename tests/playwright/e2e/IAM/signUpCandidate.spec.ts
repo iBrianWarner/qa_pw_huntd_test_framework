@@ -70,7 +70,7 @@ test.describe('Sign Up page', () => {
 
     await candidateJobExpectationsPage.assertOpened();
     await candidateJobExpectationsPage.assertAnnualButtonIsActive();
-    await candidateJobExpectationsPage.fillDesiredSalaryField(salary);
+    await candidateJobExpectationsPage.typeDesiredSalaryField(salary);
     await candidateJobExpectationsPage.selectJobExperienceFromDropdown(
       JobExperience.UpTo3Years,
     );
@@ -78,6 +78,7 @@ test.describe('Sign Up page', () => {
       EnglishLevel.UpperIntermediate,
     );
     await candidateJobExpectationsPage.selectCity(Cities.Kyiv);
+    await candidateJobExpectationsPage.waitForCityFieldHasValue(Cities.Kyiv);
     await candidateJobExpectationsPage.assertIsRemoteCheckboxIsChecked();
     await candidateJobExpectationsPage.clickSaveAndContinueButton();
 

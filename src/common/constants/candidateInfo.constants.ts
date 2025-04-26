@@ -10,3 +10,4 @@ export const TECHNOLOGIES = {
 export const DESIRED_POSITION = 'QA';
 
 export const MIN_ANNUAL_SALARY_USD = 2400;
+export const MAX_ANNUAL_SALARY_USD = MIN_ANNUAL_SALARY_USD * 2;

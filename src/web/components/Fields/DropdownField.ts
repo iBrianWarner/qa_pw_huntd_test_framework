@@ -1,7 +1,7 @@
 import { test, Locator, Page } from '@playwright/test';
 import { Cities } from '@/common/typedefs/cities.typedefs';
 import { BaseComponent } from '@/web/components/BaseComponent';
-import { UiElementsHelper } from '../Helpers/UiElementsHelpers';
+import { UiElementsHelper } from '@/web/components/Helpers/UiElementsHelpers';
 
 export class DropdownField extends BaseComponent {
   private readonly elementsHelper = new UiElementsHelper(this.page);

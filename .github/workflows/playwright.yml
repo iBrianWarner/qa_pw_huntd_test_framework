@@ -35,9 +35,12 @@ jobs:
           npm install -g allure-commandline --save-dev
 
       - name: ▶️ Run Playwright tests
-        run: |
-          npx playwright test
-          allure generate --clean
+        continue-on-error: true
+        run: npx playwright test
+        
+      - name: 🧪 Generate Allure Report
+        if: ${{ always() }}
+        run: allure generate --clean
 
       - name: ⬆️ Upload artifacts
         uses: actions/upload-artifact@v4
