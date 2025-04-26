@@ -34,6 +34,9 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
+  snapshotPathTemplate:
+    './resources/playwright-snapshots/{testFileDir}/{arg}.png',
+
   /* Configure projects for major browsers */
   projects: [
     {

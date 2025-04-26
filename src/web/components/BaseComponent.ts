@@ -1,4 +1,4 @@
-import test from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 import { ApiWrapper } from '@pages/ApiWrapper';
 
 export class BaseComponent extends ApiWrapper {
@@ -30,6 +30,23 @@ export class BaseComponent extends ApiWrapper {
     return await test.step('Get text from clipboard', async () => {
       return await this.page.evaluate(
         async () => await navigator.clipboard.readText(),
+      );
+    });
+  }
+
+  async assertLocatorHasScreenshot(
+    locator: Locator,
+    fileName: string,
+  ): Promise<void> {
+    await test.step('Assert locator screenshot', async () => {
+      const isCi = process.env.ENV_TYPE === 'ci';
+
+      await expect(locator).toHaveScreenshot(
+        isCi ? `${fileName}-ci` : fileName,
+        {
+          omitBackground: true,
+          maxDiffPixelRatio: 0.1,
+        },
       );
     });
   }

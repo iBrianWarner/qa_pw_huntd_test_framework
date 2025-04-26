@@ -33,6 +33,18 @@ export class ProfileExperienceCard extends BaseComponent {
     });
   }
 
+  async assertProfessionCardScreenshot(options: {
+    profession: string;
+    fileName: string;
+  }): Promise<void> {
+    await test.step('Assert content screenshot', async () => {
+      const { profession, fileName } = options;
+      const message = this.getProfileExperienceCardByProfession(profession);
+
+      await this.assertLocatorHasScreenshot(message, fileName);
+    });
+  }
+
   async clickEditButton(profession: string): Promise<void> {
     await test.step('Click edit button', async () => {
       await this.getEditButtonForProfessionCard(profession).click();

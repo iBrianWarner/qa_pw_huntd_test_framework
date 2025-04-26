@@ -57,3 +57,11 @@ export function generatePhrase(wordCount = 3): string {
 export function generateParagraph(sentenceCount = 3): string {
   return faker.lorem.paragraph(sentenceCount);
 }
+
+export function generateFirstName(): string {
+  return faker.person.firstName();
+}
+
+export function generateLastName(): string {
+  return faker.person.lastName();
+}
