@@ -1,5 +1,4 @@
 import { PwProjectName } from '@/common/allure/allure.typedefs';
-import { MOBILE_DEVICES } from '@/common/constants/devices';
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import fs from 'fs';
@@ -62,13 +61,12 @@ export default defineConfig({
     {
       name: PwProjectName.Chromium,
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: [/mobile.spec.ts/],
     },
     {
       name: PwProjectName.Android,
       use: {
         ...devices['Pixel 5'],
-        isMobile: true,
-        viewport: MOBILE_DEVICES.pixel5.viewport,
       },
       testMatch: `**.android.mobile.spec.ts`,
       testIgnore: /ios.mobile.spec.ts/,
@@ -78,8 +76,6 @@ export default defineConfig({
       use: {
         ...devices['iPhone 13 Pro Max'],
         defaultBrowserType: 'chromium',
-        isMobile: true,
-        viewport: MOBILE_DEVICES.iPhone13ProMax.viewport,
       },
       testMatch: '**.mobile.spec.ts',
       testIgnore: /android.mobile.spec.ts/,

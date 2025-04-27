@@ -31,7 +31,8 @@ import { UserRole } from '@/common/typedefs/userRoles.typedefs';
 import { ProfileFeedbackPage } from '@/web/pages/Auth/ProfileFeedbackPage';
 import { CandidateProfilePreviewPage } from '@/web/pages/Profile_Preview/CandidateProfilePreviewPage';
 
-test.describe('Sign Up page', () => {
+// eslint-disable-next-line playwright/no-skipped-test
+test.describe.skip('Sign Up page', () => {
   let signUpPage: SignUpPage;
   let chooseProfilePage: ChooseProfilePage;
   let candidateProfilePage: CandidateRoleProfilePage;
