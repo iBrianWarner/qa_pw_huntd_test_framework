@@ -12,9 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          fetch-depth: 0          # ensure we can fetch other branches
 
       - name: 📨 Cache Playwright browsers
         uses: actions/cache@v3
@@ -24,6 +23,22 @@ jobs:
           restore-keys: |
             playwright-browsers-${{ runner.os }}-
 
+      - name: 💾 Checkout gh-pages for history
+        if: always()
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages       # pulls gh-pages into ./gh-pages :contentReference[oaicite:0]{index=0}
+
+      - name: 🔄 Copy previous Allure history
+        if: always()
+        run: |
+          if [ -d gh-pages/history ]; then
+            mkdir -p allure-results/history
+            cp -R gh-pages/history/* allure-results/history/
+          fi
+
       - name: 📦 Install dependencies
         run: npm ci --legacy-peer-deps
 
@@ -31,20 +46,21 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: 👨‍💻 Install Allure CLI
-        run: |
-          npm install -g allure-commandline --save-dev
+        run: npm install -g allure-commandline --save-dev
 
       - name: ▶️ Run Playwright tests
         id: playwright
         continue-on-error: true
         run: npm run pw:run:ci
-        
+
       - name: 🧪 Generate Allure Report
-        if: ${{ always() }}
+        if: always()
         run: npm run allure:generate
+        # your allure:generate script should be "allure generate allure-results -o allure-report" 
+        # and will now include the copied history
 
       - name: ⬆️ Upload artifacts
-        if: ${{ always() }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
@@ -57,8 +73,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
           publish_branch: gh-pages
-          keep_files: true
+          keep_files: true    # don’t delete files you’re not overwriting
 
       - name: ❌ Fail job if tests failed
-        if: ${{ steps.playwright.conclusion == 'failure' }}
+        if: steps.playwright.conclusion == 'failure'
         run: exit 1

@@ -9,7 +9,7 @@
     "pw:run:local-open": "ENV_TYPE=local npx playwright test --ui",
     "pw:run:local-open-debug": "PWDEBUG=console ENV_TYPE=local npx playwright test --ui --debug",
     "lint": "eslint . --ext .ts,.js",
-    "allure:generate": "allure generate --clean",
+    "allure:generate": "allure generate --clean allure-results -o allure-report",
     "allure:open": "allure open",
     "prepare": "husky"
   },
