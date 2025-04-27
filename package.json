@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pw:install:browsers": "npx playwright install --with-deps chromium",
+    "pw:install:browsers:with-retry": "node ./scripts/installBrowsersWithRetry.js",
     "pw:run:ci": "ENV_TYPE=ci npx playwright test --project=chromium --project=ios --project=android",
     "pw:run:local": "ENV_TYPE=local npx playwright test --project=chromium  --project=ios --project=android",
     "pw:run:local-open": "ENV_TYPE=local npx playwright test --ui",

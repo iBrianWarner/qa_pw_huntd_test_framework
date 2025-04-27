@@ -24,7 +24,9 @@ export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     languageOptions: {
-      globals: globals.node,
+      globals: {
+        ...globals.node,
+      },
     },
     ...pluginJs.configs.recommended,
     ...playwright.configs['flat/recommended'],
